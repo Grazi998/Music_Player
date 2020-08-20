@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "newSong";
+}
+
+<div>
+    <form action="/music/newSong" method="POST">
+        <input type="text"
+               name="name"
+               id="song_name"
+               placeholder="Name..." />
+        <input type="number"
+               name="length"
+               id="song_length"
+               placeholder="Length..." />
+        <select id="artist_select">
+            <option id="null" value="null">NULL</option>
+        </select>
+        
+
+        <div>
+            @*<button class="saveBtn" onclick="Save()">Save</button>*@
+            <input type="button" value="Save" id="Artist_save" onclick="Save()" />
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    var sel = document.getElementById("artist_select");
+    function Show(data) {
+        for (var i = 0; i < data.length; i++) {
+            var opt = document.createElement("option");
+            opt.innerHTML = data[i].name;
+            opt.value = data[i].id;
+            alert(opt.value);
+            sel.appendChild(opt);
+        }
+    }
+
+    async function Save() {
+        await axios.post("/api/song/newSong", {
+            "id": null,
+            "songname": `${document.getElementById("song_name").value}`,
+            "songlength": `${document.getElementById("song_length").value}`,
+            "artist_id": `${document.getElementById("artist_select").value}`
+        });
+        console.log("Saved...");
+        parent.location = "/";
+
+    }
+
+    axios.get('/api/artist').then(response => Show(response.data));
+</script>

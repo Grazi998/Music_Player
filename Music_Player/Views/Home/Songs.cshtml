@@ -1,0 +1,25 @@
+﻿<h1>SONGSS</h1>
+<p id="par">    </p>
+<button id="btn">Click</button>
+
+<script type="text/javascript">
+    var dat;
+    window.onload = function () {
+        document.getElementById("btn").addEventListener("click", Ayy)
+    }
+
+    function Ayy() {
+        alert(typeof (dat));
+    }
+
+    function Show(data) {
+        dat = data;
+        for (var i = 0; i < data.length; i++) {
+            document.getElementById("par").innerHTML += data[0][i];
+        }
+        //console.log(data);
+        alert(data);
+    }
+    
+    axios.get('/api/song').then(response => Show(response.data));
+</script>

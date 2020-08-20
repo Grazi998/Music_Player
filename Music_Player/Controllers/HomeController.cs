@@ -18,6 +18,19 @@ namespace Music_Player.Controllers
             _logger = logger;
         }
 
+        public IActionResult Artists()
+        {
+            return View();
+        }
+        public IActionResult newArtist()
+        {
+            return View();
+        }
+        public IActionResult newSong()
+        {
+            return View();
+        }
+
         public IActionResult Index()
         {
             return View();

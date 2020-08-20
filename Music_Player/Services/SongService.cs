@@ -1,4 +1,5 @@
-﻿using Music_Player.Repositories;
+﻿using Music_Player.Models;
+using Music_Player.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,21 @@ namespace Music_Player.Services
         public IEnumerable<Models.Song> GetAll()
         {
             return _sr.GetAll();
+        }
+
+        public async Task<Song> GetAsync(int id)
+        {
+            return await _sr.GetAsync(id);
+        }
+
+        public void Save(Song song)
+        {
+            _sr.Save(song);
+        }
+
+        public void SongEdit(Song song)
+        {
+            _sr.SongEdit(song);
         }
     }
 }

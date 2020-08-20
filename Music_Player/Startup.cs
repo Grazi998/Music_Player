@@ -39,6 +39,8 @@ namespace Music_Player
 
             services.AddScoped<SongRepository>();
             services.AddScoped<SongService>();
+            services.AddScoped<ArtistRepository>();
+            services.AddScoped<ArtistService>();
 
             SetupDbContext(services);
         }
@@ -68,6 +70,24 @@ namespace Music_Player
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                    "Artists",
+                    "music/artists",
+                    new { controller = "Home", action = "Artists" }
+                    );
+
+                endpoints.MapControllerRoute(
+                    "newArtist",
+                    "music/newArtist",
+                    new { controller = "Home", action = "newArtist" }
+                    );
+
+                endpoints.MapControllerRoute(
+                    "newSong",
+                    "music/newSong",
+                    new { controller = "Home", action = "newSong" }
+                    );
             });
         }
     }

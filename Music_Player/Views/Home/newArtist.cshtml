@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "newArtist";
+}
+
+<div>
+    <form action="/music/newArtist" method="POST">
+        <input type="text"
+               name="name"
+               id="artist_name"
+               placeholder="Name..." />
+
+        <div>
+            @*<button class="saveBtn" onclick="Save()">Save</button>*@
+            <input type="button" value="Save" id="Artist_save" onclick="Save()" />
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    async function Save() {
+        await axios.post("/api/artist/addArtist", {
+            "id": null,
+            "artistname": `${document.getElementById("artist_name").value}`
+        });
+        console.log("Saved...");
+        parent.location = "/music/artists";
+
+    }
+</script>

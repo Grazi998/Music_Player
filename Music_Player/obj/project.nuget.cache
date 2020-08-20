@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8aC3kiqzmZvLdCw67VMksCqvryiZ1RsI2Yg1DMSBHFRmaM7JnITD8digj9wGatishH1MzMwtBygWSxXbNvsdIg==",
+  "dgSpecHash": "tv0oLooPQcOSTP1XTQpdmpTv39ILwGs4P714UKqctRyE6M9WlxHURXqVMCxy/ApcrlP+H83qiIzv+kyQTogT9A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\5cepr\\Desktop\\Music_Player\\Music_Player\\Music_Player.csproj",
+  "projectFilePath": "C:\\Users\\5cepr\\Desktop\\Projekti_GK\\Music_Player\\Music_Player\\Music_Player.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\5cepr\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.7\\microsoft.aspnetcore.jsonpatch.3.1.7.nupkg.sha512",
     "C:\\Users\\5cepr\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.1.7\\microsoft.aspnetcore.mvc.newtonsoftjson.3.1.7.nupkg.sha512",

@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Music_Player.DtoMappers;
 //using Music_Player.DbModels;
 using Music_Player.Models;
 using Music_Player.Services;
+using Newtonsoft.Json.Linq;
 
 namespace Music_Player.Controllers
 {
@@ -26,5 +28,29 @@ namespace Music_Player.Controllers
         {
             return _ss.GetAll().ToList();
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Song>> GetOne(int id)
+        {
+            return await _ss.GetAsync(id);
+        }
+
+        [HttpPost("newSong")]
+        public ActionResult Save([FromBody] JObject json)
+        {
+            var s = JObject.Parse(json.ToString());
+            var song = SongDto.FromJson(s);
+            //Console.WriteLine(song);
+            _ss.Save(song);
+            return Ok();
+        }
+
+        [HttpPut("songedit")]
+        public void SongEdit([FromBody] JObject json)
+        {
+            var song = SongDto.FromJson(json);
+            _ss.SongEdit(song);
+        }
+
     }
 }

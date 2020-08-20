@@ -1,0 +1,116 @@
+﻿@{
+    ViewData["Title"] = "allArtists";
+}
+
+<style>
+    #artist_table {
+
+    }
+</style>
+<div>
+    <table id="artist_table">
+        <thead>
+            <tr>ID</tr>
+            <tr>Name</tr>
+
+        </thead>
+        <tbody id="tb">
+
+        </tbody>
+    </table>
+    <br />
+    <button id="add">Add new</button>
+
+
+</div>
+
+<script type="text/javascript">
+
+
+    document.getElementById("add").addEventListener("click", Add);
+
+    function Add() {
+        parent.location = "/music/newArtist"
+    }
+    
+    //PRIKAZ 
+    function Show(data) {
+
+        let tb = document.getElementById("tb");
+        let rows = data.map(x => domHelper.createTableRow(x));
+        console.log(rows);
+
+        //Dohvacanje po ID-ju za brsianje
+        for (let row of rows) {
+            var btn = document.createElement("button");
+            btn.innerHTML = "Remove";
+            btn.id = `${row.children[0].textContent}`;
+            btn.addEventListener("click", GetAllData);
+            var th = document.createElement("td");
+            th.appendChild(btn);
+            row.appendChild(th);
+            tb.appendChild(row);
+        }
+
+
+        
+    }
+
+    //DOHVAĆANJE SVIH PJESAMA
+    function GetAllData() {
+        var btnID = event.target.id;
+        axios.get('/api/song').then(response => GetMatchingIDs(response.data, btnID));
+        
+
+    }
+
+    //DOHVAĆANJE SVIH PJESAMA I TRAŽENJE ONIH KOJE NOSE TRAŽENI ID AUTORA
+    function GetMatchingIDs(data, btn) {
+        var dat = [];
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].artistID == btn) {
+                dat.push(data[i].id);
+            }
+        }
+        if (dat.length > 0) {
+            alert("IF");
+            
+
+            for (var i = 0; i < dat.length; i++) {
+                GetDataPerID(dat[i], btn);
+            }
+        }
+        else {
+            alert("ELSE");
+            RemoveArtist(btn);
+        }
+        
+    }
+
+    //DOHVAĆANJE ID PJESAMA TRAŽENOG AUTORA
+    function GetDataPerID(id, btn) {
+        axios.get(`/api/song/${id}`).then(response => ChangeToNull(response.data, btn));
+    }
+
+    //STAVLJANJE POVEZNICE NA NULL
+    function ChangeToNull(data, btn) {
+        let song = {
+            "id": data.id,
+            "songname": data.name,
+            "songlength": data.length,
+            "artist_id": null
+        }
+        axios.put("/api/song/songedit", song).then(response => {
+            window.location.reload();
+        });
+        RemoveArtist(btn);
+    }
+
+    //BRISANJE AUTORA
+    function RemoveArtist(btn) {
+        axios.delete(`/api/artist/${btn}`, btn).then(response => {
+            window.location.reload();
+        });
+    }
+    axios.get('/api/artist').then(response => Show(response.data));
+</script>

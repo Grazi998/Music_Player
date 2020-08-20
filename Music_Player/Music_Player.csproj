@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Mappers\" />
+    <Folder Include="Views\My\" />
   </ItemGroup>
 
 </Project>

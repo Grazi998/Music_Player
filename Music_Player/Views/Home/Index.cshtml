@@ -3,6 +3,35 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to Music_Player</h1>
 </div>
+<div>
+    <p id="par">    </p>
+    <button id="artist_btn">Artists</button>
+    <button id="newSong_btn">New Song</button>
+
+</div>
+
+
+<script type="text/javascript">
+    var dat=[];
+    document.getElementById("artist_btn").addEventListener("click", ShowArtists);
+    document.getElementById("newSong_btn").addEventListener("click", NewSong);
+
+    function NewSong() {
+        window.location = "music/newSong";
+    }
+
+    function ShowArtists() {
+        window.location = "music/artists";
+    }
+
+    function Show(data) {
+        for (var i = 0; i < data.length; i++) {
+            document.getElementById("par").innerHTML += JSON.stringify(data[i]) + "<br>";            
+        }
+    }
+
+    axios.get('/api/song').then(response => Show(response.data));
+</script>
+
