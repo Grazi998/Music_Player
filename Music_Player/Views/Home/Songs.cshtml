@@ -1,4 +1,7 @@
-﻿<h1>SONGSS</h1>
+﻿@{
+    ViewData["Title"] = "allSongs";
+}
+<h1>SONGS</h1>
 <p id="par">    </p>
 <button id="btn">Click</button>
 
@@ -15,11 +18,9 @@
     function Show(data) {
         dat = data;
         for (var i = 0; i < data.length; i++) {
-            document.getElementById("par").innerHTML += data[0][i];
+            document.getElementById("par").innerHTML += JSON.stringify(data[i]);
         }
-        //console.log(data);
-        alert(data);
     }
-    
+
     axios.get('/api/song').then(response => Show(response.data));
 </script>

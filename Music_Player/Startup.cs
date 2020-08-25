@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +34,40 @@ namespace Music_Player
             services.AddDbContext<msc_plyContext>(options => options.UseSqlServer(connString));
         }
 
+        public class SessionUserTimeout : ActionFilterAttribute
+        {
+            public override void OnActionExecuting(ActionExecutingContext context)
+            {
+                if (context.HttpContext.Session == null || !context.HttpContext.Session.TryGetValue("SessionUser", out byte[] val))
+                {
+                    context.Result =
+                        new RedirectToRouteResult(new RouteValueDictionary(new
+                        {
+                            controller = "Authentication",
+                            action = "UserSignIn"
+                        }));
+                }
+                base.OnActionExecuting(context);
+            }
+        }
+
+        public class SessionAdminTimeout : ActionFilterAttribute
+        {
+            public override void OnActionExecuting(ActionExecutingContext context)
+            {
+                if (context.HttpContext.Session == null || !context.HttpContext.Session.TryGetValue("SessionAdmin", out byte[] val))
+                {
+                    context.Result =
+                        new RedirectToRouteResult(new RouteValueDictionary(new
+                        {
+                            controller = "Authentication",
+                            action = "AdminSignin"
+                        }));
+                }
+                base.OnActionExecuting(context);
+            }
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -43,6 +80,9 @@ namespace Music_Player
             services.AddScoped<ArtistService>();
 
             SetupDbContext(services);
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromSeconds(3600);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +103,10 @@ namespace Music_Player
 
             app.UseRouting();
 
+            app.UseSession();
+
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -78,6 +122,12 @@ namespace Music_Player
                     );
 
                 endpoints.MapControllerRoute(
+                    "Songs",
+                    "music/songs",
+                    new { controller = "Home", action = "Songs" }
+                    );
+
+                endpoints.MapControllerRoute(
                     "newArtist",
                     "music/newArtist",
                     new { controller = "Home", action = "newArtist" }
@@ -87,6 +137,17 @@ namespace Music_Player
                     "newSong",
                     "music/newSong",
                     new { controller = "Home", action = "newSong" }
+                    );
+
+                endpoints.MapControllerRoute(
+                    "AdminSignin",
+                    "music/adminsignin",
+                    new { controller = "Authentication", action = "AdminSignin" }
+                    );
+                endpoints.MapControllerRoute(
+                    "AdminHome",
+                    "music/adminhome",
+                    new { controller = "Admin", action = "AdminHome" }
                     );
             });
         }

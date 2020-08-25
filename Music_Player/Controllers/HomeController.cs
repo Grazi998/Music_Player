@@ -22,6 +22,10 @@ namespace Music_Player.Controllers
         {
             return View();
         }
+        public IActionResult Songs()
+        {
+            return View();
+        }
         public IActionResult newArtist()
         {
             return View();

@@ -136,8 +136,6 @@ C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\bin\Debug\netcoreap
 C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreapp3.1\Music_Player.csprojAssemblyReference.cache
 C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreapp3.1\Music_Player.AssemblyInfoInputs.cache
 C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreapp3.1\Music_Player.AssemblyInfo.cs
-C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreapp3.1\Music_Player.csproj.CoreCompileInputs.cache
-C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreapp3.1\Music_Player.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreapp3.1\Music_Player.RazorAssemblyInfo.cache
 C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreapp3.1\Music_Player.RazorAssemblyInfo.cs
 C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreapp3.1\Music_Player.TagHelpers.input.cache
@@ -164,3 +162,9 @@ C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreap
 C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreapp3.1\Razor\Views\Home\newArtist.cshtml.g.cs
 C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreapp3.1\Razor\Views\Home\editSong.cshtml.g.cs
 C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreapp3.1\Razor\Views\Home\newSong.cshtml.g.cs
+C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreapp3.1\Razor\Views\Admin\AdminHome.cshtml.g.cs
+C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreapp3.1\Razor\Views\Authentication\AdminSignIn.cshtml.g.cs
+C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreapp3.1\Razor\Views\Authentication\UserSignIn.cshtml.g.cs
+C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreapp3.1\Razor\Views\Authentication\UserSignUp.cshtml.g.cs
+C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreapp3.1\Music_Player.csproj.CoreCompileInputs.cache
+C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreapp3.1\Music_Player.MvcApplicationPartsAssemblyInfo.cache

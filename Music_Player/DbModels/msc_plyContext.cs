@@ -16,6 +16,7 @@ namespace Music_Player.DbModels
         }
 
         public virtual DbSet<Artist> Artist { get; set; }
+        public virtual DbSet<MscAdmin> MscAdmin { get; set; }
         public virtual DbSet<MscUser> MscUser { get; set; }
         public virtual DbSet<Playlist> Playlist { get; set; }
         public virtual DbSet<PlaylistSong> PlaylistSong { get; set; }
@@ -25,7 +26,6 @@ namespace Music_Player.DbModels
         {
             if (!optionsBuilder.IsConfigured)
             {
-
                 optionsBuilder.UseSqlServer("Server=(LocalDB)\\MSSQLLocalDB;Database=msc_ply;Trusted_Connection=True;");
             }
         }
@@ -45,6 +45,25 @@ namespace Music_Player.DbModels
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<MscAdmin>(entity =>
+            {
+                entity.ToTable("msc_admin");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasColumnName("password")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Username)
+                    .IsRequired()
+                    .HasColumnName("username")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<MscUser>(entity =>
             {
                 entity.ToTable("msc_user");
@@ -54,6 +73,11 @@ namespace Music_Player.DbModels
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasColumnName("email")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Password)
+                    .HasColumnName("password")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
@@ -128,7 +152,6 @@ namespace Music_Player.DbModels
                 entity.HasOne(d => d.Artist)
                     .WithMany(p => p.Song)
                     .HasForeignKey(d => d.ArtistId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("song_artist_id_fk");
             });
 

@@ -37,27 +37,49 @@
     function Show(data) {
 
         let tb = document.getElementById("tb");
-        let rows = data.map(x => domHelper.createTableRow(x));
-        console.log(rows);
 
-        //Dohvacanje po ID-ju za brsianje
-        for (let row of rows) {
+        for (var i = 0; i < data.length; i++) {
             var btn = document.createElement("button");
+            var row = document.createElement("tr");
+
+            var rowid = document.createElement("td");
+            rowid.innerHTML = `${data[i].id}`;
+            var rowname = document.createElement("td");
+            rowname.innerHTML = `${data[i].name}`;
+
+
+            row.appendChild(rowid);
+            row.appendChild(rowname);
+     
             btn.innerHTML = "Remove";
-            btn.id = `${row.children[0].textContent}`;
-            btn.addEventListener("click", GetAllData);
-            var th = document.createElement("td");
-            th.appendChild(btn);
-            row.appendChild(th);
+            btn.id = `${data[i].id}`;
+            btn.addEventListener("click", GetAllSongs);
+            var td = document.createElement("td");
+            td.appendChild(btn);
+            row.appendChild(td);
             tb.appendChild(row);
         }
+
+        //let rows = data.map(x => domHelper.createTableRow(x));
+
+        //Dohvacanje po ID-ju za brsianje
+        //for (let row of rows) {
+        //    var btn = document.createElement("button");
+        //    btn.innerHTML = "Remove";
+        //    btn.id = `${row.children[0].textContent}`;
+        //    btn.addEventListener("click", GetAllData);
+        //    var th = document.createElement("td");
+        //    th.appendChild(btn);
+        //    row.appendChild(th);
+        //    tb.appendChild(row);
+        //}
 
 
         
     }
 
     //DOHVAĆANJE SVIH PJESAMA
-    function GetAllData() {
+    function GetAllSongs() {
         var btnID = event.target.id;
         axios.get('/api/song').then(response => GetMatchingIDs(response.data, btnID));
         
@@ -72,16 +94,12 @@
                 dat.push(data[i].id);
             }
         }
-        if (dat.length > 0) {
-            alert("IF");
-            
-
+        if (dat.length > 0) {          
             for (var i = 0; i < dat.length; i++) {
                 GetDataPerID(dat[i], btn);
             }
         }
         else {
-            alert("ELSE");
             RemoveArtist(btn);
         }
         
@@ -101,14 +119,18 @@
             "artist_id": null
         }
         axios.put("/api/song/songedit", song).then(response => {
-            window.location.reload();
+            RemoveArtist(btn);
         });
-        RemoveArtist(btn);
+        
     }
 
     //BRISANJE AUTORA
     function RemoveArtist(btn) {
-        axios.delete(`/api/artist/${btn}`, btn).then(response => {
+        //axios.delete(`/api/artist/${btn}`, btn).then(response => {
+        //    window.location.reload();
+        //});
+
+        $.ajax({ url: `/api/artist/${btn}`, method: "DELETE" }).then(response => {
             window.location.reload();
         });
     }
