@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "editSong";
+}
+
+<div>
+    <form action="/music/editSong" method="PUT">
+        <input type="text"
+               name="name"
+               id="song_name"
+               placeholder="Name..." />
+        <input type="number"
+               name="length"
+               id="song_length"
+               placeholder="Length..." />
+        <select id="artist_select">
+            <option id="null" value="null">NULL</option>
+        </select>
+
+
+        <div>
+            <input type="button" value="Save" id="Artist_save" onclick="Save()" />
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    
+    async function Start() {
+        await axios.get('/api/artist').then(response => Show(response.data));
+        axios.get(`/api/song/${id}`).then(res => Fill(res.data));
+    }
+
+    function Fill(data) {
+        console.log("data" + data);
+        for (var i = 0; i < document.getElementById("artist_select").options.length; i++) {
+            if (document.getElementById("artist_select").options[i].value == data.artistID) {
+                document.getElementById("artist_select").selectedIndex = i;
+                break;
+            }
+        }
+        
+        document.getElementById("song_name").value = data.name;
+        document.getElementById("song_length").value = data.length;
+    }
+
+    function Save() {
+
+        let song = {
+            "id": id,
+            "songname": document.getElementById("song_name").value,
+            "songlength": document.getElementById("song_length").value,
+            "artist_id": document.getElementById("artist_select").options[document.getElementById("artist_select").selectedIndex].value
+        }
+        axios.put("/api/song/songedit", song).then(window.location="/music/songs");
+        
+    }
+
+    var sel = document.getElementById("artist_select");
+    var id = sessionStorage.getItem("EditSongId");
+    function Show(data) {
+        for (var i = 0; i < data.length; i++) {
+            var opt = document.createElement("option");
+            opt.innerHTML = data[i].name;
+            opt.value = data[i].id;
+            sel.appendChild(opt);
+        }
+    }
+    Start();
+    
+</script>

@@ -7,7 +7,7 @@ namespace Music_Player.DbModels
     {
         public Song()
         {
-            PlaylistSong = new HashSet<PlaylistSong>();
+            ListSong = new HashSet<ListSong>();
         }
 
         public int Id { get; set; }
@@ -16,6 +16,6 @@ namespace Music_Player.DbModels
         public int? ArtistId { get; set; }
 
         public virtual Artist Artist { get; set; }
-        public virtual ICollection<PlaylistSong> PlaylistSong { get; set; }
+        public virtual ICollection<ListSong> ListSong { get; set; }
     }
 }

@@ -26,6 +26,10 @@ namespace Music_Player.Controllers
         {
             return View();
         }
+        public IActionResult Users()
+        {
+            return View();
+        }
         public IActionResult newArtist()
         {
             return View();

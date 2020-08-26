@@ -1,0 +1,107 @@
+﻿@{
+    ViewData["Title"] = "allSongs";
+}
+<h1>SONGS</h1>
+<div>
+    <table id="artist_table">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>NAME</td>
+                <td>LENGTH</td>
+                <td>ARTIST</td>
+            </tr>
+        </thead>
+        <tbody id="tb">
+        </tbody>
+    </table>
+    <br />
+    <button id="add">Add new</button>
+
+
+</div>
+
+<script type="text/javascript">
+
+    document.getElementById("add").addEventListener("click", Add)
+    var artists = [];
+    Get();
+    async function Get() {
+        await axios.get('/api/artist').then(response => GetArtists(response.data));
+        axios.get('/api/song').then(response => Show(response.data));
+    }
+    
+    function Add() {
+        parent.location = "/music/newSong";
+    }
+    function GetArtists(data) {
+        for (var i = 0; i < data.length; i++) {
+            artists.push(data[i]);
+        }
+        console.log(artists);
+    }
+
+    //PRIKAZ 
+    function Show(data) {
+        let tb = document.getElementById("tb");
+        console.log(data);
+        for (var i = 0; i < data.length; i++) {
+            var btnR = document.createElement("button");
+            var btnE = document.createElement("button");
+            var row = document.createElement("tr");
+
+            var rowid = document.createElement("td");
+            rowid.innerHTML = `${data[i].id}`;
+            var rowname = document.createElement("td");
+            rowname.innerHTML = `${data[i].name}`;
+            var rowlength = document.createElement("td");
+            rowlength.innerHTML = `${data[i].length}`;
+
+            var rowartist = document.createElement("td");
+            for (var j = 0; j < artists.length; j++) {
+                if (data[i].artistID == artists[j].id) {
+                    rowartist.innerHTML = `${artists[j].name}`;
+                    break;
+                }
+                else {
+                    rowartist.innerHTML = "Unknown";
+                }
+         
+            }
+           
+            row.appendChild(rowid);
+            row.appendChild(rowname);
+            row.appendChild(rowlength);
+            row.appendChild(rowartist);
+
+            btnR.innerHTML = "Remove";
+            btnR.id = `${data[i].id}`;
+            btnR.addEventListener("click", DeleteSong);
+
+            btnE.innerHTML = "Edit";
+            btnE.id = `${data[i].id}`;
+            btnE.addEventListener("click", Edit);
+            var td = document.createElement("td");
+            td.appendChild(btnE);
+            td.appendChild(btnR);
+            row.appendChild(td);
+            tb.appendChild(row);
+        }
+        function Edit() {
+            var id = event.target.id;
+            sessionStorage.setItem("EditSongId", `${id}`);
+            window.location = "/music/editSong";
+        }
+
+        function DeleteSong() {
+            var id = event.target.id;
+            console.log("ids");
+            $.ajax({ url: `/api/song/delete/${id}`, method: "DELETE" }).then(response => {
+                window.location.reload();
+                
+            });
+            
+        }
+    }
+    
+</script>

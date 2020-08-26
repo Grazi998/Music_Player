@@ -11,9 +11,9 @@ namespace Music_Player.Models
 
         public string title { get; set; }
 
-        public int userID { get; set; }
+        public int? userID { get; set; }
 
-        public Playlist(int? id, string _title, int _userID)
+        public Playlist(int? id, string _title, int? _userID)
         {
             ID = id;
             title = _title;

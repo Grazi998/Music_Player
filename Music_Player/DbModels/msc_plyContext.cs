@@ -16,10 +16,10 @@ namespace Music_Player.DbModels
         }
 
         public virtual DbSet<Artist> Artist { get; set; }
+        public virtual DbSet<ListSong> ListSong { get; set; }
         public virtual DbSet<MscAdmin> MscAdmin { get; set; }
         public virtual DbSet<MscUser> MscUser { get; set; }
         public virtual DbSet<Playlist> Playlist { get; set; }
-        public virtual DbSet<PlaylistSong> PlaylistSong { get; set; }
         public virtual DbSet<Song> Song { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -43,6 +43,27 @@ namespace Music_Player.DbModels
                     .HasColumnName("artistname")
                     .HasMaxLength(100)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<ListSong>(entity =>
+            {
+                entity.ToTable("list_song");
+
+                entity.Property(e => e.ListSongId).HasColumnName("list_song_id");
+
+                entity.Property(e => e.PlaylistId).HasColumnName("playlist_id");
+
+                entity.Property(e => e.SongId).HasColumnName("song_id");
+
+                entity.HasOne(d => d.Playlist)
+                    .WithMany(p => p.ListSong)
+                    .HasForeignKey(d => d.PlaylistId)
+                    .HasConstraintName("playlist_song_playlist_id_fk");
+
+                entity.HasOne(d => d.Song)
+                    .WithMany(p => p.ListSong)
+                    .HasForeignKey(d => d.SongId)
+                    .HasConstraintName("playlist_song_song_id_fk");
             });
 
             modelBuilder.Entity<MscAdmin>(entity =>
@@ -105,32 +126,7 @@ namespace Music_Player.DbModels
                 entity.HasOne(d => d.MscUser)
                     .WithMany(p => p.Playlist)
                     .HasForeignKey(d => d.MscUserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("playlist_msc_user_id_fk");
-            });
-
-            modelBuilder.Entity<PlaylistSong>(entity =>
-            {
-                entity.HasKey(e => new { e.PlaylistId, e.SongId })
-                    .HasName("playlist_song_pk");
-
-                entity.ToTable("playlist_song");
-
-                entity.Property(e => e.PlaylistId).HasColumnName("playlist_id");
-
-                entity.Property(e => e.SongId).HasColumnName("song_id");
-
-                entity.HasOne(d => d.Playlist)
-                    .WithMany(p => p.PlaylistSong)
-                    .HasForeignKey(d => d.PlaylistId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("playlist_song_playlist_id_fk");
-
-                entity.HasOne(d => d.Song)
-                    .WithMany(p => p.PlaylistSong)
-                    .HasForeignKey(d => d.SongId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("playlist_song_song_id_fk");
             });
 
             modelBuilder.Entity<Song>(entity =>

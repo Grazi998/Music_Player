@@ -30,6 +30,12 @@ namespace Music_Player.Controllers
             return _as.GetAll().ToList();
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Models.Artist>> GetOne(int id)
+        {
+            return await _as.GetAsync(id);
+        }
+
         [HttpPost("addArtist")]
         public ActionResult Save([FromBody] JObject json)
         {
@@ -41,6 +47,13 @@ namespace Music_Player.Controllers
             Console.WriteLine(artist);
             _as.Save(artist);
             return Ok();
+        }
+
+        [HttpPut("editArtist")]
+        public void ArtistEdit([FromBody] JObject json)
+        {
+            var art = ArtistDto.FromJson(json);
+            _as.ArtistEdit(art);
         }
 
         [HttpDelete("{id}")]

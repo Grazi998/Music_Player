@@ -7,14 +7,14 @@ namespace Music_Player.DbModels
     {
         public Playlist()
         {
-            PlaylistSong = new HashSet<PlaylistSong>();
+            ListSong = new HashSet<ListSong>();
         }
 
         public int Id { get; set; }
         public string Title { get; set; }
-        public int MscUserId { get; set; }
+        public int? MscUserId { get; set; }
 
         public virtual MscUser MscUser { get; set; }
-        public virtual ICollection<PlaylistSong> PlaylistSong { get; set; }
+        public virtual ICollection<ListSong> ListSong { get; set; }
     }
 }

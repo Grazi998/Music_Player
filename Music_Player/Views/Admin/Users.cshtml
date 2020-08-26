@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "allUsers";
+}
+<h1>USERS</h1>
+<div>
+    <table id="artist_table">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>USERNAME</td>
+            </tr>
+        </thead>
+        <tbody id="tb">
+        </tbody>
+    </table>
+
+
+</div>
+
+<script type="text/javascript">
+
+    //PRIKAZ
+    function Show(data) {
+
+        let tb = document.getElementById("tb");
+
+        for (var i = 0; i < data.length; i++) {
+            var btn = document.createElement("button");
+            var row = document.createElement("tr");
+
+            var rowid = document.createElement("td");
+            rowid.innerHTML = `${data[i].id}`;
+            var rowusername = document.createElement("td");
+            rowusername.innerHTML = `${data[i].username}`;
+
+
+            row.appendChild(rowid);
+            row.appendChild(rowusername);
+
+            btn.innerHTML = "Remove";
+            btn.id = `${data[i].id}`;
+            btn.addEventListener("click", DeleteUser);
+            var td = document.createElement("td");
+            td.appendChild(btn);
+            row.appendChild(td);
+            tb.appendChild(row);
+        }
+    }
+
+    function DeleteUser() {
+        var id = event.target.id;
+        $.ajax({ url: `/api/user/delete/${id}`, method: "DELETE" }).then(response => {
+            window.location.reload();
+        });
+    }
+    axios.get('/api/user/allusers').then(response => Show(response.data));
+</script>

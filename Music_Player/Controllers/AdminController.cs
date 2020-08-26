@@ -18,8 +18,48 @@ namespace Music_Player.Controllers
             var userInfo = JsonConvert.DeserializeObject<UserInfo>(HttpContext.Session.GetString("SessionAdmin"));
             ViewBag.user = userInfo.Username;
             return View();
+        }
 
+        [SessionAdminTimeout]
+        public IActionResult Artists()
+        {
+            return View();
+        }
 
+        [SessionAdminTimeout]
+        public IActionResult Songs()
+        {
+            return View();
+        }
+
+        [SessionAdminTimeout]
+        public IActionResult Users()
+        {
+            return View();
+        }
+
+        [SessionAdminTimeout]
+        public IActionResult newArtist()
+        {
+            return View();
+        }
+
+        [SessionAdminTimeout]
+        public IActionResult newSong()
+        {
+            return View();
+        }
+
+        [SessionAdminTimeout]
+        public IActionResult editSong()
+        {
+            return View();
+        }
+
+        [SessionAdminTimeout]
+        public IActionResult editArtist()
+        {
+            return View();
         }
     }
 }

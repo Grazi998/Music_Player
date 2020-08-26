@@ -3,3 +3,21 @@
     ViewBag.Title = "UserSignUp";
 }
 <h1><strong>User sign up </strong></h1>
+<form method="POST" enctype="multipart/form-data" asp-controller="Authentication" asp-action="UserSignUp">
+    <input type="text" name="username" placeholder="Username.." />
+
+    <input type="email" name="email" placeholder="E-mail.." />
+
+    <input type="password"
+           name="password"
+           id=""
+           placeholder="Password.." />
+
+    <input type="password"
+           name="passwordConfirmation"
+           id=""
+           placeholder="Confirm the password.." />
+
+    <input type="submit" name="register" value="Register" />
+    <p><a href="/music/usersignin">Already have an account?</a></p>
+</form>

@@ -5,6 +5,7 @@ using Music_Player.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Music_Player.Repositories
@@ -40,6 +41,22 @@ namespace Music_Player.Repositories
         {
             var dbSong = SongMapper.ToDatabase(song);
             _dbContext.Song.Update(dbSong);
+            _dbContext.SaveChanges();
+        }
+
+        public void SongDelete(int id)
+        {
+            while (_dbContext.ListSong.Where(x => x.SongId.Equals(id)).FirstOrDefault() != null)
+            {
+                var song = _dbContext.ListSong.Where(x => x.SongId.Equals(id)).FirstOrDefault();
+                song.PlaylistId = null;
+                song.SongId = null;
+                _dbContext.ListSong.Remove(song);
+                _dbContext.SaveChanges();
+            }
+
+            var sng = _dbContext.Song.Where(x => x.Id == id).FirstOrDefault();
+            _dbContext.Song.Remove(sng);
             _dbContext.SaveChanges();
         }
     }

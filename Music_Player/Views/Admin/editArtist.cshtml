@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "editArtist";
+}
+
+<div>
+    <form action="/music/editArtist" method="PUT">
+        <input type="text"
+               name="name"
+               id="artist_name"
+               placeholder="Name..." />
+
+        <div>
+            <input type="button" value="Save" id="Artist_save" onclick="Save()" />
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    var id = sessionStorage.getItem("EditArtistId");
+    function Save() {
+        var artist = {
+            "id": id,
+            "artistname": `${document.getElementById("artist_name").value}`
+        };
+        axios.put("/api/artist/editArtist", artist).then(window.location="/music/artists");
+
+    }
+
+    function Fill(data) {
+        document.getElementById("artist_name").value = data.name;
+    }
+
+    axios.get(`/api/artist/${id}`).then(res => Fill(res.data));
+</script>

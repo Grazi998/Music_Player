@@ -3,10 +3,11 @@ using System.Collections.Generic;
 
 namespace Music_Player.DbModels
 {
-    public partial class PlaylistSong
+    public partial class ListSong
     {
-        public int PlaylistId { get; set; }
-        public int SongId { get; set; }
+        public int ListSongId { get; set; }
+        public int? PlaylistId { get; set; }
+        public int? SongId { get; set; }
 
         public virtual Playlist Playlist { get; set; }
         public virtual Song Song { get; set; }

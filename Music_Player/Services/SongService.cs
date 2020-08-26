@@ -35,5 +35,10 @@ namespace Music_Player.Services
         {
             _sr.SongEdit(song);
         }
+
+        public void SongDelete(int id)
+        {
+             _sr.SongDelete(id);
+        }
     }
 }

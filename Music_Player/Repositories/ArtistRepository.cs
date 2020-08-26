@@ -22,10 +22,23 @@ namespace Music_Player.Repositories
             return _dbContext.Artist.Select(x => ArtistMapper.FromDatabase(x));
         }
 
+        public async Task<Models.Artist> GetAsync(int id)
+        {
+            var result = await _dbContext.Artist.SingleOrDefaultAsync(x => x.Id == id);
+            return ArtistMapper.FromDatabase(result);
+        }
+
         public void Save(Models.Artist artist)
         {
             var dbArtist = ArtistMapper.ToDatabase(artist);
             _dbContext.Artist.Add(dbArtist);
+            _dbContext.SaveChanges();
+        }
+
+        public void ArtistEdit(Models.Artist art)
+        {
+            var dbArtist = ArtistMapper.ToDatabase(art);
+            _dbContext.Artist.Update(dbArtist);
             _dbContext.SaveChanges();
         }
 

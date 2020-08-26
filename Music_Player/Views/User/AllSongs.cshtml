@@ -1,0 +1,144 @@
+﻿@{
+    ViewData["Title"] = "AllSongs";
+    ViewBag.Title = "AllSongs";
+}
+<h1><strong>All Songs</strong></h1>
+<button id="toPlaylists">MY PLAYLISTS</button>
+<table id="songs_table">
+    <thead>
+        <tr>
+            <td>ID</td>
+            <td>Name</td>
+            <td>Length</td>
+            <td>Artist</td>
+            <td>Playlist</td>
+        </tr>
+
+
+    </thead>
+    <tbody id="tb">
+    </tbody>
+</table>
+<script type="text/javascript">
+
+    var artists = [];
+    var playlists = [];
+    Get();
+    async function Get() {
+        await axios.get('/api/artist').then(response => GetArtists(response.data));
+        await axios.get("/api/playlist").then(response => GetPlaylists(response.data));
+        await axios.get('/api/song').then(response => Show(response.data));
+        document.getElementById("toPlaylists").addEventListener("click", function () {
+            window.location = "/music/user/playlists";
+        })
+    }
+
+    function GetPlaylists(data) {
+        for (var i = 0; i < data.length; i++) {
+            playlists.push(data[i]);
+        }
+    }
+
+    function GetArtists(data) {
+        for (var i = 0; i < data.length; i++) {
+            artists.push(data[i]);
+        }
+    }
+
+    async function Show(data) {
+        let tb = document.getElementById("tb");
+        for (var i = 0; i < data.length; i++) {
+            //var btn = document.createElement("button");
+            var row = document.createElement("tr");
+
+            var rowid = document.createElement("td");
+            rowid.innerHTML = `${data[i].id}`;
+            var rowname = document.createElement("td");
+            rowname.innerHTML = `${data[i].name}`;
+            var rowlength = document.createElement("td");
+            rowlength.innerHTML = `${data[i].length}`;
+
+            var rowartist = document.createElement("td");
+            for (var j = 0; j < artists.length; j++) {
+                if (data[i].artistID == artists[j].id) {
+                    rowartist.innerHTML = `${artists[j].name}`;
+                    break;
+                }
+                else {
+                    rowartist.innerHTML = "Unknown";
+                }
+
+            }
+
+            var sel = document.createElement("select");
+            sel.id = data[i].id;
+            var opt = document.createElement("option");
+            opt.text = "ADD TO PLAYLIST...";
+            opt.value = "add";
+            sel.appendChild(opt);
+
+            //var index;
+            //await axios.get(`/api/playlist/getplaylistbysong/${data[i].id}`).then(resp => index = resp);
+
+            //console.log(index);
+
+            for (var j = 0; j < playlists.length; j++) {
+                var option = document.createElement("option");
+                option.textContent = playlists[j].title;
+                option.id = playlists[j].id;
+                
+                //if (index.data.id == playlists[j].id) {
+                //    console.log("Mirko ljubav moja!");
+                //    option.selected = "selected";
+                //}
+                sel.appendChild(option);
+            }
+            sel.addEventListener("change", AddSongToPlaylist);
+ 
+
+
+
+            row.appendChild(rowid);
+            row.appendChild(rowname);
+            row.appendChild(rowlength);
+            row.appendChild(rowartist);
+
+            
+            
+
+            //btn.innerHTML = "Remove";
+            //btn.id = `${data[i].id}`;
+            //btn.addEventListener("click", DeleteSong);
+
+            var td = document.createElement("td");
+            td.appendChild(sel);
+
+            //td.appendChild(btn);
+            row.appendChild(td);
+            tb.appendChild(row);
+        }
+    }
+
+    async function AddSongToPlaylist() {
+        alert("Promjena");
+        var song = event.target.id;
+        var play;
+        for (var i = 0; i < event.target.options.length; i++) {
+            if (event.target.options[i].selected) {
+                play = event.target.options[i].id;
+                break;
+            }
+            else {
+                play = "nista";
+            }
+        }
+        event.target.selectedIndex = 0;
+        await axios.post("/api/playlist/addtoplaylist", {
+            "id": null,
+            "playlistid": `${play}`,
+            "songid": `${song}`
+        });
+        alert("Song Added To Playlist!");
+        console.log("Pjesma: " + song + "   Playlist: " + play);
+    }
+</script>

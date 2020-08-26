@@ -52,5 +52,12 @@ namespace Music_Player.Controllers
             _ss.SongEdit(song);
         }
 
+        [HttpDelete("delete/{id}")]
+        public void Delete(int id)
+        {
+            _ss.SongDelete(id);
+
+        }
+
     }
 }

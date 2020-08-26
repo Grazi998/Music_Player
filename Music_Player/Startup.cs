@@ -78,6 +78,10 @@ namespace Music_Player
             services.AddScoped<SongService>();
             services.AddScoped<ArtistRepository>();
             services.AddScoped<ArtistService>();
+            services.AddScoped<UserRepository>();
+            services.AddScoped<UserService>();
+            services.AddScoped<PlaylistRepository>();
+            services.AddScoped<PlaylistService>();
 
             SetupDbContext(services);
             services.AddSession(options => {
@@ -118,25 +122,43 @@ namespace Music_Player
                 endpoints.MapControllerRoute(
                     "Artists",
                     "music/artists",
-                    new { controller = "Home", action = "Artists" }
+                    new { controller = "Admin", action = "Artists" }
                     );
 
                 endpoints.MapControllerRoute(
                     "Songs",
                     "music/songs",
-                    new { controller = "Home", action = "Songs" }
+                    new { controller = "Admin", action = "Songs" }
+                    );
+
+                endpoints.MapControllerRoute(
+                    "Users",
+                    "music/users",
+                    new { controller = "Admin", action = "Users" }
                     );
 
                 endpoints.MapControllerRoute(
                     "newArtist",
                     "music/newArtist",
-                    new { controller = "Home", action = "newArtist" }
+                    new { controller = "Admin", action = "newArtist" }
+                    );
+
+                endpoints.MapControllerRoute(
+                    "editArtist",
+                    "music/editArtist",
+                    new { controller = "Admin", action = "editArtist" }
                     );
 
                 endpoints.MapControllerRoute(
                     "newSong",
                     "music/newSong",
-                    new { controller = "Home", action = "newSong" }
+                    new { controller = "Admin", action = "newSong" }
+                    );
+
+                endpoints.MapControllerRoute(
+                    "editSong",
+                    "music/editSong",
+                    new { controller = "Admin", action = "editSong" }
                     );
 
                 endpoints.MapControllerRoute(
@@ -144,10 +166,34 @@ namespace Music_Player
                     "music/adminsignin",
                     new { controller = "Authentication", action = "AdminSignin" }
                     );
+
                 endpoints.MapControllerRoute(
                     "AdminHome",
                     "music/adminhome",
                     new { controller = "Admin", action = "AdminHome" }
+                    );
+
+                endpoints.MapControllerRoute(
+                    "UserSignIn",
+                    "music/usersignin",
+                    new { controller = "Authentication", action = "UserSignIn" }
+                    );
+
+                endpoints.MapControllerRoute(
+                    "UserSignUp",
+                    "music/usersignup",
+                    new { controller = "Authentication", action = "UserSignUp" }
+                    );
+
+                endpoints.MapControllerRoute(
+                    "AllSongs",
+                    "music/allsongs",
+                    new { controller = "User", action = "AllSongs" }
+                    );
+                endpoints.MapControllerRoute(
+                    "Playlists",
+                    "music/user/playlists",
+                    new { controller = "User", action = "Playlists" }
                     );
             });
         }

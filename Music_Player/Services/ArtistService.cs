@@ -21,9 +21,19 @@ namespace Music_Player.Services
             return _ar.GetAll();
         }
 
+        public async Task<Artist> GetAsync(int id)
+        {
+            return await _ar.GetAsync(id);
+        }
+
         public void Save(Artist artist)
         {
             _ar.Save(artist);
+        }
+
+        public void ArtistEdit(Artist art)
+        {
+            _ar.ArtistEdit(art);
         }
 
         public async Task DeleteAsync(int id)
