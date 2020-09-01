@@ -21,6 +21,11 @@ namespace Music_Player.Services
             return _ur.GetAll();
         }
 
+        public User GetByName(string uname)
+        {
+            return _ur.GetByName(uname);
+        }
+
         //public IEnumerable<TaskToDo> GetTasks(int id)
         //{
         //    return _adminRepository.GetTasks(id);

@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "newArtist";
 }
-
+<button id="back" onclick="goBack()">GO BACK</button>
 <div>
     <form action="/music/newArtist" method="POST">
         <input type="text"
@@ -16,13 +16,16 @@
     </form>
 </div>
 <script type="text/javascript">
+    function goBack() {
+        window.location = "/music/artists";
+    }
     async function Save() {
         await axios.post("/api/artist/addArtist", {
             "id": null,
             "artistname": `${document.getElementById("artist_name").value}`
         });
         console.log("Saved...");
-        parent.location = "/music/artists";
+        window.location = "/music/artists";
 
     }
 </script>

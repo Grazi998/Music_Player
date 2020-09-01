@@ -34,5 +34,15 @@ namespace Music_Player.Services
         {
             _pr.Add(playsong);
         }
+
+        public void Save(Playlist ply)
+        {
+            _pr.Save(ply);
+        }
+        
+        public void PlaylistDelete(int id)
+        {
+            _pr.PlaylistDelete(id);
+        }
     }
 }

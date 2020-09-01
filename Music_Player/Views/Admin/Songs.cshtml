@@ -1,7 +1,9 @@
 ﻿@{
     ViewData["Title"] = "allSongs";
 }
+
 <h1>SONGS</h1>
+<button id="back" onclick="goBack()">GO BACK</button>
 <div>
     <table id="artist_table">
         <thead>
@@ -22,7 +24,9 @@
 </div>
 
 <script type="text/javascript">
-
+    function goBack() {
+        window.location = "/music/adminhome";
+    }
     document.getElementById("add").addEventListener("click", Add)
     var artists = [];
     Get();

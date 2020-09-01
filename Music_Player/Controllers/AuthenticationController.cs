@@ -88,8 +88,8 @@ namespace Music_Player.Controllers
             {
                 return RedirectToRoute(new
                 {
-                    controller = "Home",
-                    action = "Artists"
+                    controller = "User",
+                    action = "AllSongs"
                 });
             }
             else

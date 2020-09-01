@@ -3,6 +3,7 @@
     ViewBag.Title = "AdminSignIn";
 }
 <h1><strong>Admin sign in </strong></h1>
+<button id="back" onclick="goBack()">GO BACK</button>
 <form method="POST" enctype="multipart/form-data" asp-controller="Authentication" asp-action="AdminSignin">
 
     <input type="text" name="username" placeholder="Username.." value="grazi998"/>
@@ -11,3 +12,8 @@
 
     <input type="submit" name="login" value="Login" />
 </form>
+<script type="text/javascript">
+    function goBack() {
+        window.location = "/";
+    }
+</script>

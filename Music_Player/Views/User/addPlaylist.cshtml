@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "addPlaylist";
+}
+<button id="back" onclick="goBack()">GO BACK</button>
+<div>
+    <form action="/music/newSong" method="POST">
+        <input type="text"
+               name="title"
+               id="playlist_title"
+               placeholder="Title..." />
+        
+
+
+        <div>
+            @*<button class="saveBtn" onclick="Save()">Save</button>*@
+            <input type="button" value="Save" id="Playlist_save" onclick="Save()" />
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    function goBack() {
+        window.location = "/music/user/playlists";
+    }
+    var userID;
+
+    async function Save() {
+        var user = "@ViewBag.user";
+        await axios.get(`/api/user/getuserbyname/${user}`).then(resp => GetUserId(resp.data));
+
+        await axios.post("/api/playlist/addPlaylist", {
+            "id": null,
+            "title": `${document.getElementById("playlist_title").value}`,
+            "mscuserid": `${userID}`
+        });
+        window.location = "/music/user/playlists";
+    }
+
+    function GetUserId(data) {
+        console.log(data);
+        userID = data.id;
+    }
+
+
+</script>

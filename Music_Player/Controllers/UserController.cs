@@ -26,5 +26,13 @@ namespace Music_Player.Controllers
             ViewBag.user = userInfo.Username;
             return View();
         }
+
+        [SessionUserTimeout]
+        public IActionResult addPlaylist()
+        {
+            var userInfo = JsonConvert.DeserializeObject<UserInfo>(HttpContext.Session.GetString("SessionUser"));
+            ViewBag.user = userInfo.Username;
+            return View();
+        }
     }
 }

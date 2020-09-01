@@ -3,6 +3,7 @@
     ViewBag.Title = "UserSignIn";
 }
 <h1><strong>User sign in </strong></h1>
+<button id="back" onclick="goBack()">GO BACK</button>
 <form method="POST" enctype="multipart/form-data" asp-controller="Authentication" asp-action="UserSignIn">
     <input type="text" name="username" placeholder="Username.." value="gkaluza"/>
 
@@ -13,6 +14,11 @@
     <div class="links">
         <a href="#">Lost your password?</a><br />
 
-        <a href="/music/AllSongs">Don't have an account?</a>
+        <a href="/music/usersignup">Don't have an account?</a>
     </div>
 </form>
+<script type="text/javascript">
+    function goBack() {
+        window.location = "/";
+    }
+</script>

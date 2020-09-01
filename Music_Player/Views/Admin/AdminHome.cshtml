@@ -3,6 +3,15 @@
     ViewBag.Title = "AdminHome";
 }
 <h1><strong>WELCOME BACK, @ViewBag.user !!! </strong></h1>
+<button id="back" onclick="goBack()">GO BACK</button>
+<br />
 <a href="/music/artists">ARTISTS</a>
+<br />
 <a href="/music/songs">SONGS</a>
+<br />
 <a href="/music/users">USERS</a>
+<script type="text/javascript">
+    function goBack() {
+        window.location = "/";
+    }
+</script>

@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "newSong";
 }
-
+<button id="back" onclick="goBack()">GO BACK</button>
 <div>
     <form action="/music/newSong" method="POST">
         <input type="text"
@@ -13,7 +13,7 @@
                id="song_length"
                placeholder="Length..." />
         <select id="artist_select">
-            <option id="null" value="null">NULL</option>
+            <option id="null" value="none">NULL</option>
         </select>
         
 
@@ -25,26 +25,34 @@
 </div>
 
 <script type="text/javascript">
+    function goBack() {
+        window.location = "/music/songs";
+    }
     var sel = document.getElementById("artist_select");
     function Show(data) {
         for (var i = 0; i < data.length; i++) {
             var opt = document.createElement("option");
             opt.innerHTML = data[i].name;
             opt.value = data[i].id;
-            alert(opt.value);
             sel.appendChild(opt);
         }
     }
 
     async function Save() {
+        var artistID;
+        if (document.getElementById("artist_select").value == "none") {
+            artistID = null;
+        }
+        else {
+            artistID = document.getElementById("artist_select").value;
+        }
         await axios.post("/api/song/newSong", {
             "id": null,
             "songname": `${document.getElementById("song_name").value}`,
             "songlength": `${document.getElementById("song_length").value}`,
-            "artist_id": `${document.getElementById("artist_select").value}`
+            "artist_id": artistID
         });
-        console.log("Saved...");
-        parent.location = "/";
+        window.location = "/music/songs";
 
     }
 

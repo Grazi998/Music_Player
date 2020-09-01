@@ -3,6 +3,7 @@
     ViewBag.Title = "AllSongs";
 }
 <h1><strong>All Songs</strong></h1>
+<button id="back" onclick="goBack()">GO BACK</button>
 <button id="toPlaylists">MY PLAYLISTS</button>
 <table id="songs_table">
     <thead>
@@ -23,20 +24,28 @@
 
     var artists = [];
     var playlists = [];
+    var user = "@ViewBag.user";
     Get();
     async function Get() {
         await axios.get('/api/artist').then(response => GetArtists(response.data));
-        await axios.get("/api/playlist").then(response => GetPlaylists(response.data));
+        await axios.get(`/api/user/allplaylists/${user}`).then(response => GetPlaylists(response.data));
         await axios.get('/api/song').then(response => Show(response.data));
         document.getElementById("toPlaylists").addEventListener("click", function () {
             window.location = "/music/user/playlists";
         })
     }
 
+    function goBack() {
+        window.location = "/";
+    }
+
     function GetPlaylists(data) {
-        for (var i = 0; i < data.length; i++) {
-            playlists.push(data[i]);
+        if (data != null) {
+            for (var i = 0; i < data.length; i++) {
+                playlists.push(data[i]);
+            }
         }
+        
     }
 
     function GetArtists(data) {
@@ -120,7 +129,6 @@
     }
 
     async function AddSongToPlaylist() {
-        alert("Promjena");
         var song = event.target.id;
         var play;
         for (var i = 0; i < event.target.options.length; i++) {
@@ -138,7 +146,6 @@
             "playlistid": `${play}`,
             "songid": `${song}`
         });
-        alert("Song Added To Playlist!");
         console.log("Pjesma: " + song + "   Playlist: " + play);
     }
 </script>

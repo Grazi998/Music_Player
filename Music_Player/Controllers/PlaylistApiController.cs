@@ -50,5 +50,21 @@ namespace Music_Player.Controllers
             _ps.Add(song);
             return Ok();
         }
+
+        [HttpPost("addPlaylist")]
+        public ActionResult Save([FromBody] JObject json)
+        {
+            var p = JObject.Parse(json.ToString());
+            var playlist = PlaylistDto.FromJson(p);
+            //Console.WriteLine(song);
+            _ps.Save(playlist);
+            return Ok();
+        }
+
+        [HttpDelete("delete/{id}")]
+        public void Delete(int id)
+        {
+            _ps.PlaylistDelete(id);
+        }
     }
 }

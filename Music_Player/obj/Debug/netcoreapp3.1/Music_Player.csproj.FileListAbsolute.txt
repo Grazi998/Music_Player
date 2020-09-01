@@ -173,3 +173,4 @@ C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreap
 C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreapp3.1\Razor\Views\User\UserHome.cshtml.g.cs
 C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreapp3.1\Razor\Views\User\AllSongs.cshtml.g.cs
 C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreapp3.1\Razor\Views\User\Playlists.cshtml.g.cs
+C:\Users\5cepr\Desktop\Projekti_GK\Music_Player\Music_Player\obj\Debug\netcoreapp3.1\Razor\Views\User\addPlaylist.cshtml.g.cs

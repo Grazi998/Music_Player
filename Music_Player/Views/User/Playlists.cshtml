@@ -3,30 +3,68 @@
     ViewBag.Title = "Playlists";
 }
 <h1><strong>Your playlists, @ViewBag.user !!! </strong></h1>
+<button id="back" onclick="goBack()">GO BACK</button>
 <select id="sel">
 
 </select>
+<button onclick="deletePlaylist()">Delete</button>
+<button onclick="newPlaylist()">New Playlist</button>
 <div id="div">
 
 </div>
 
 <script type="text/javascript">
-    var uname = "@ViewBag.user";
+    function goBack() {
+        window.history.back();
+    }
     Start();
     async function Start() {
+        var uname = "@ViewBag.user";
         await axios.get(`/api/user/allplaylists/${uname}`).then(response => Show(response.data));
+
         document.getElementById("sel").addEventListener("change", NextPlaylist);
     }
 
-    function Show(data) {
-        for (var i = 0; i < data.length; i++) {
-            var opt = document.createElement("option");
-            opt.textContent = data[i].title;
-            opt.id = data[i].id;
-            document.getElementById("sel").appendChild(opt);
+    function newPlaylist() {
+        window.location = "/music/playlist/addnew";
+    }
+
+    function deletePlaylist() {
+        var id;
+        var sel = document.getElementById("sel");
+
+        for (var i = 0; i < sel.options.length; i++) {
+            if (sel.options[i].selected) {
+                id = sel.options[i].id;
+                break;
+            }
         }
-        document.getElementById("sel").selectedIndex = 0;
-        NextPlaylist();
+        console.log(id);
+        $.ajax({ url: `/api/playlist/delete/${id}`, method: "DELETE" }).then(response => {
+            window.location.reload();
+        });
+    }
+
+    function Show(data) {
+        if (data.length > 0) {
+            console.log(data);
+            for (var i = 0; i < data.length; i++) {
+                var opt = document.createElement("option");
+                opt.textContent = data[i].title;
+                opt.id = data[i].id;
+                document.getElementById("sel").appendChild(opt);
+            }
+            document.getElementById("sel").selectedIndex = 0;
+            NextPlaylist();
+        }
+        else {
+            var opt = document.createElement("option");
+            opt.textContent = "NaN";
+            document.getElementById("sel").appendChild(opt);
+            document.getElementById("div").innerHTML = "PLAYLIST DOESN'T EXIST!";
+        }
+        
+
 
     }
 
@@ -43,46 +81,56 @@
 
         var data;
         await axios.get(`/api/playlist/getsongsinplaylist/${id}`).then(resp => data = resp.data);
+
         console.log(data);
 
 
-        var table = document.createElement("table");
-        var th = document.createElement("thead");
-        var tb = document.createElement("tbody");
-        var trh = document.createElement("tr");
+        if (data.length > 0) {
+            var table = document.createElement("table");
+            var th = document.createElement("thead");
+            var tb = document.createElement("tbody");
+            var trh = document.createElement("tr");
 
 
-        Object.keys(data[0]).forEach(function (k) {
-            var tdh = document.createElement("td");
-            tdh.innerHTML = k;
-            trh.appendChild(tdh);
-        });
-        
-        th.appendChild(trh);;
+            Object.keys(data[0]).forEach(function (k) {
+                var tdh = document.createElement("td");
+                tdh.innerHTML = k;
+                trh.appendChild(tdh);
+            });
 
-        
-        for (var i = 0; i < data.length; i++) {
-            var tr = document.createElement("tr");
+            th.appendChild(trh);;
 
-            var rowid = document.createElement("td");
-            rowid.innerHTML = `${data[i].id}`;
-            var rowname = document.createElement("td");
-            rowname.innerHTML = `${data[i].name}`;
-            var rowlength = document.createElement("td");
-            rowlength.innerHTML = `${data[i].length}`;
 
-            tr.appendChild(rowid);
-            tr.appendChild(rowname);
-            tr.appendChild(rowlength);
-            tb.appendChild(tr);
+            for (var i = 0; i < data.length; i++) {
+                var tr = document.createElement("tr");
+
+                var rowid = document.createElement("td");
+                rowid.innerHTML = `${data[i].id}`;
+                var rowname = document.createElement("td");
+                rowname.innerHTML = `${data[i].name}`;
+                var rowlength = document.createElement("td");
+                rowlength.innerHTML = `${data[i].length}`;
+
+                tr.appendChild(rowid);
+                tr.appendChild(rowname);
+                tr.appendChild(rowlength);
+                tb.appendChild(tr);
+            }
+
+
+
+
+            table.appendChild(th);
+            table.appendChild(tb);
+
+            document.getElementById("div").appendChild(table);
         }
-        
+        else {
+            document.getElementById("div").innerHTML = "PLAYLIST IS EMPTY!!!";
+
+        }
+
 
         
-
-        table.appendChild(th);
-        table.appendChild(tb);
-
-        document.getElementById("div").appendChild(table);
     }
 </script>

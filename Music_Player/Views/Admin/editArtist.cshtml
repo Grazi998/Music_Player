@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "editArtist";
 }
-
+<button id="back" onclick="goBack()">GO BACK</button>
 <div>
     <form action="/music/editArtist" method="PUT">
         <input type="text"
@@ -15,6 +15,9 @@
     </form>
 </div>
 <script type="text/javascript">
+    function goBack() {
+        window.location = "/music/artists";
+    }
     var id = sessionStorage.getItem("EditArtistId");
     function Save() {
         var artist = {

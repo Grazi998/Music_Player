@@ -2,6 +2,7 @@
     ViewData["Title"] = "allUsers";
 }
 <h1>USERS</h1>
+<button id="back" onclick="goBack()">GO BACK</button>
 <div>
     <table id="artist_table">
         <thead>
@@ -18,7 +19,9 @@
 </div>
 
 <script type="text/javascript">
-
+    function goBack() {
+        window.location = "/music/adminhome";
+    }
     //PRIKAZ
     function Show(data) {
 
@@ -49,6 +52,7 @@
 
     function DeleteUser() {
         var id = event.target.id;
+        console.log("Delete");
         $.ajax({ url: `/api/user/delete/${id}`, method: "DELETE" }).then(response => {
             window.location.reload();
         });

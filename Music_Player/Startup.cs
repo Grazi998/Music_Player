@@ -190,11 +190,19 @@ namespace Music_Player
                     "music/allsongs",
                     new { controller = "User", action = "AllSongs" }
                     );
+
                 endpoints.MapControllerRoute(
                     "Playlists",
                     "music/user/playlists",
                     new { controller = "User", action = "Playlists" }
                     );
+
+                endpoints.MapControllerRoute(
+                    "NewPlaylist",
+                    "music/playlist/addnew",
+                    new { controller = "User", action = "addPlaylist" }
+                    );
+
             });
         }
     }

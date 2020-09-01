@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "editSong";
 }
-
+<button id="back" onclick="goBack()">GO BACK</button>
 <div>
     <form action="/music/editSong" method="PUT">
         <input type="text"
@@ -24,7 +24,9 @@
 </div>
 
 <script type="text/javascript">
-    
+    function goBack() {
+        window.location = "/music/songs";
+    }
     async function Start() {
         await axios.get('/api/artist').then(response => Show(response.data));
         axios.get(`/api/song/${id}`).then(res => Fill(res.data));

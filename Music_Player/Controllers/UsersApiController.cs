@@ -57,5 +57,11 @@ namespace Music_Player.Controllers
         {
             _us.DeleteUser(id);
         }
+
+        [HttpGet("getuserbyname/{uname}")]
+        public ActionResult<User> GetByName(string uname)
+        {
+            return _us.GetByName(uname);
+        }
     }
 }

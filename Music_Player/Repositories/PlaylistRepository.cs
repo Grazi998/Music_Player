@@ -61,5 +61,30 @@ namespace Music_Player.Repositories
 
             return songs;
         }
+
+        public void Save(Models.Playlist ply)
+        {
+            var dbply = PlaylistMapper.ToDatabase(ply);
+            _dbContext.Playlist.Add(dbply);
+            _dbContext.SaveChanges();
+            //Console.WriteLine("\nSAVED");
+        }
+
+        public void PlaylistDelete(int id)
+        {
+            while (_dbContext.ListSong.Where(x => x.PlaylistId.Equals(id)).FirstOrDefault() != null)
+            {
+                var couple = _dbContext.ListSong.Where(x => x.PlaylistId.Equals(id)).FirstOrDefault();
+                couple.PlaylistId = null;
+                couple.SongId = null;
+                _dbContext.ListSong.Remove(couple);
+                _dbContext.SaveChanges();
+            }
+
+            var playlist = _dbContext.Playlist.Where(x => x.Id.Equals(id)).FirstOrDefault();
+            playlist.MscUserId = null;
+            _dbContext.Playlist.Remove(playlist);
+            _dbContext.SaveChanges();
+        }
     }
 }
